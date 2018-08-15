@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration    
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"    
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<properties resource="jdbc.properties" />
+	<classPathEntry  
+        location="E:\maven\repo\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" /> 
+    <context id="mis">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true" />
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driver}"
+            connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />
+
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+		<!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="com.lph.entities" targetProject="src/main/java" >
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="false"/>
+            <!-- optional.是否对model添加 构造函数 -->  
+            <property name="constructorBased" value="true"/>  
+            <!-- optional.建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->  
+            <property name="immutable" value="false"/> 
+        </javaModelGenerator>
+        <!-- 生成mapper xml文件 -->    
+        <sqlMapGenerator targetPackage="com.lph.Mapper" targetProject="src/main/java" >
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.***.model， true:com.***.model.[schemaName] -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>    
+        <!-- 生成DAO的包名和位置  
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象  
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象  
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口 -->
+        <javaClientGenerator targetPackage="com.lph.dao"
+            targetProject="src/main/java" type="XMLMAPPER" >
+            <!--是否允许建立子包（对应MySql的scheme）-->
+    		<property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+            
+        <table schema="mis" tableName="teacher"
+            domainObjectName="Teacher" enableCountByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    </context>
+</generatorConfiguration>

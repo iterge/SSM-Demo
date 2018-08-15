@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.lph.dao.UserDao">
+	<select id="userList" resultType="com.lph.entities.User">
+		select * from user order by id asc
+	</select>
+	<resultMap type="com.lph.entities.User" id="userMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="pwd" property="pwd"/>
+	</resultMap>
+    <select id="getUserById" parameterType="java.lang.String" resultType="com.lph.entities.User">
+        SELECT * FROM USER WHERE id = #{id};
+    </select>
+    <insert id="insertUser" parameterType="com.lph.entities.User" >
+    	insert into user(id,name,pwd) values(#{id},#{name},#{pwd});
+    </insert>
+    <update id="updateUser" parameterType="com.lph.entities.User">
+    	update user set
+    		name = #{name},
+   			pwd = #{pwd}
+   		where id = #{id}
+    </update>
+    <delete id="deleteUser" parameterType="String">
+    	delete from user where id = #{id}
+    </delete>
+</mapper>
